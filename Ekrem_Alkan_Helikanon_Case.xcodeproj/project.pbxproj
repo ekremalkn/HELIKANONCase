@@ -411,8 +411,7 @@
 				F071D65C2A30D4B30070DFB4 /* Cell */,
 				F071D65A2A30D3DD0070DFB4 /* HomeCollectionHeaderView.swift */,
 			);
-			name = View;
-			path = "vİEW";
+			path = View;
 			sourceTree = "<group>";
 		};
 		F071D6882A31D2230070DFB4 /* ViewModel */ = {
