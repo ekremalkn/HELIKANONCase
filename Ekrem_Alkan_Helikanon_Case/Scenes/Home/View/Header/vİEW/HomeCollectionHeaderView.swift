@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol HomeCollectionHeaderInterface: AnyObject {
+    func configureHeaderView()
+    
+    func reloadData()
+}
+
 final class HomeCollectionHeaderView: UICollectionReusableView {
     static let identifier = "HomeCollectionHeaderView"
     
@@ -26,9 +32,9 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .init(hex: "FBFCFE")
-        collectionView.register(HeaderCell.self, forCellWithReuseIdentifier: HeaderCell.identifier)
+        collectionView.register(HeaderCollectionCell.self, forCellWithReuseIdentifier: HeaderCollectionCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -42,20 +48,21 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
         return label
     }()
     
-    
+    //MARK: - References
+    private let viewModel: HomeCollectionHeaderViewModel
+
     override init(frame: CGRect) {
+        let service: CategoryService = NetworkService()
+        self.viewModel = HomeCollectionHeaderViewModel(service: service)
         super.init(frame: frame)
-        configureHeaderView()
+        viewModel.view = self
+        viewModel.viewInitizailed()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func configureHeaderView() {
-        setupViews()
-        setDelegates()
-    }
+
     
     private func setDelegates() {
         horizontalCollectionView.delegate = self
@@ -65,15 +72,31 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     
 }
 
+//MARK: - HomeCollectionHeaderInterface
+extension HomeCollectionHeaderView: HomeCollectionHeaderInterface {
+    func configureHeaderView() {
+        setupViews()
+        setDelegates()
+    }
+    
+    func reloadData() {
+        horizontalCollectionView.reloadData()
+    }
+    
+    
+}
+
+
 //MARK: - Configure CollectionView
 extension HomeCollectionHeaderView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return viewModel.numberOfItems()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeaderCell.identifier, for: indexPath) as? HeaderCell else { return UICollectionViewCell() }
-        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeaderCollectionCell.identifier, for: indexPath) as? HeaderCollectionCell else { return UICollectionViewCell() }
+        let data = viewModel.movies[indexPath.item]
+        cell.configure(with: data)
         return cell
     }
     
@@ -84,7 +107,7 @@ extension HomeCollectionHeaderView: UICollectionViewDelegate, UICollectionViewDa
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
-   
+    
 }
 
 

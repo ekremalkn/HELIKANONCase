@@ -1,5 +1,5 @@
 //
-//  HeaderCell.swift
+//  HeaderCollectionCell.swift
 //  Ekrem_Alkan_Helikanon_Case
 //
 //  Created by Ekrem Alkan on 7.06.2023.
@@ -7,14 +7,20 @@
 
 import UIKit
 
-final class HeaderCell: UICollectionViewCell {
-    static let identifier = "HeaderCell"
+protocol HeaderCollectionCellDataProtocol {
+    var headerCCImage: String { get }
+    var headerCCTitle: String { get }
+    var headerCCRating: String { get }
+}
+
+final class HeaderCollectionCell: UICollectionViewCell {
+    static let identifier = "HeaderCollectionCell"
     
     //MARK: - Creating UI Elements
     private lazy var movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .yellow
+        imageView.backgroundColor = .clear
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -57,7 +63,7 @@ final class HeaderCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+  
     //MARK: - Init Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,16 +76,24 @@ final class HeaderCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        movieImageView.layer.cornerRadius = 12
+        movieImageView.layer.cornerRadius = 6
         movieImageView.layer.masksToBounds = true
     }
     
+    
+    func configure(with data: HeaderCollectionCellDataProtocol) {
+        if let URL = URL(string: "https://image.tmdb.org/t/p/w500/\(data.headerCCImage)") {
+            movieImageView.setImage(withURL: URL)
+        }
+        movieTitleLabel.text = data.headerCCTitle
+        ratingLabel.text = data.headerCCRating
+    }
     
     
 }
 
 //MARK: - AddSubviews / Constraints
-extension HeaderCell {
+extension HeaderCollectionCell {
     private func setupViews() {
         backgroundColor = .init(hex: "FBFCFE")
         

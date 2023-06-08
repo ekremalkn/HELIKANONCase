@@ -15,12 +15,18 @@ final class HomeCoordinator: Coordinator {
   
     
     func start() {
-        let homeVC = HomeController()
+        let service: CategoryService = NetworkService()
+        let homeViewModel = HomeViewModel(service: service)
+        let homeVC = HomeController(viewModel: homeViewModel)
         homeVC.tabBarItem = UITabBarItem(title: "Home", image: .init(systemName: "house"), tag: 0)
         homeVC.tabBarItem.selectedImage = UIImage(systemName: "house.fill")
         homeVC.homeCoordinator = self
         
         navigationController.setViewControllers([homeVC], animated: false)
+    }
+    
+    func openDetail(_ movieID: String) {
+        
     }
     
 }

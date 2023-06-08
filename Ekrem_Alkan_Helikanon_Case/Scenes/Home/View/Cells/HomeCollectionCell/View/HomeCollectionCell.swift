@@ -7,9 +7,16 @@
 
 import UIKit
 
+protocol HomeCollectionCellDataProtocol where Self: Decodable {
+    var homeCCImage: String { get }
+    var homeCCTitle: String { get }
+    var homeCCRating: String { get }
+    var homeCCgenres: [Int] { get }
+}
+
 final class HomeCollectionCell: UICollectionViewCell {
     static let identifier = "HomeCollectionCell"
-    
+
     //MARK: - Creating UI Elements
     private lazy var movieImageView: UIImageView = {
         let imageView = UIImageView()
@@ -61,11 +68,11 @@ final class HomeCollectionCell: UICollectionViewCell {
     private lazy var genreCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 10
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isScrollEnabled = false
+        collection.contentMode = .scaleAspectFit
         collection.backgroundColor = .init(hex: "FBFCFE")
         collection.register(GenreCell.self, forCellWithReuseIdentifier: GenreCell.identifier)
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -79,6 +86,13 @@ final class HomeCollectionCell: UICollectionViewCell {
         return view
     }()
     
+    //MARK: - Variables
+    var genreIDs: [Int] = [] {
+        didSet {
+            genreCollectionView.reloadData()
+        }
+    }
+
     //MARK: - Init Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,7 +109,7 @@ final class HomeCollectionCell: UICollectionViewCell {
         movieImageView.layer.masksToBounds = true
     }
     
-    private func configureCell() {
+    func configureCell() {
         setupViews()
         setDelegates()
     }
@@ -105,27 +119,41 @@ final class HomeCollectionCell: UICollectionViewCell {
         genreCollectionView.dataSource = self
     }
     
+    func configure(with data: HomeCollectionCellDataProtocol) {
+        genreIDs = data.homeCCgenres
+        if let URL = URL(string: "https://image.tmdb.org/t/p/w500/\(data.homeCCImage)") {
+            movieImageView.setImage(withURL: URL)
+        }
+        movieTitleLabel.text = data.homeCCTitle
+        ratingLabel.text = data.homeCCRating
+        
+    }
+    
     
 }
 
 //MARK: - Configure CollectionView
 extension HomeCollectionCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return genreIDs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCell.identifier, for: indexPath) as? GenreCell else { return UICollectionViewCell() }
-        
+        let genreID = genreIDs[indexPath.item]
+        cell.configure(with: genreID)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let genreID = genreIDs[indexPath.item]
+        let genreName = GenreName.id(genreID).genreName
         
-        let cellWidth = (collectionView.frame.width / 3) - 30
-        let cellHeight = (collectionView.frame.height / 2) - 10
+        var width = genreName.size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]).width + 25
         
-        return CGSize(width: cellWidth, height: cellHeight)
+        let cellHeight = (collectionView.frame.height / 2) - 20
+        
+        return CGSize(width: width, height: cellHeight)
     }
     
 }
@@ -134,7 +162,6 @@ extension HomeCollectionCell: UICollectionViewDelegate, UICollectionViewDataSour
 extension HomeCollectionCell {
     private func setupViews() {
         backgroundColor = .init(hex: "FBFCFE")
-        
         addSubview(movieImageView)
         addSubview(movieTitleLabel)
         addSubview(ratingStackView)
@@ -153,16 +180,17 @@ extension HomeCollectionCell {
             
             movieTitleLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 20),
             movieTitleLabel.topAnchor.constraint(equalTo: movieImageView.topAnchor, constant: 20),
-            movieTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            movieTitleLabel.heightAnchor.constraint(equalToConstant: movieTitleLabel.font.lineHeight * 2),
+            movieTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             
-            ratingStackView.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 20),
+            ratingStackView.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 5),
             ratingStackView.leadingAnchor.constraint(equalTo: movieTitleLabel.leadingAnchor),
             ratingStackView.heightAnchor.constraint(equalToConstant: ratingLabel.font.lineHeight),
             
             genreCollectionView.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 10),
-            genreCollectionView.leadingAnchor.constraint(equalTo: ratingStackView.leadingAnchor),
-            genreCollectionView.trailingAnchor.constraint(equalTo: movieTitleLabel.trailingAnchor),
-            genreCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            genreCollectionView.leadingAnchor.constraint(equalTo: movieTitleLabel.leadingAnchor),
+            genreCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            genreCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             seperatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
             seperatorView.heightAnchor.constraint(equalToConstant: 0.5),

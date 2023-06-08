@@ -11,20 +11,13 @@ final class GenreCell: UICollectionViewCell {
     static let identifier = "GenreCell"
     
     //MARK: - Creating UI Elements
-    private lazy var genreLabelBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .init(hex: "DDE2FF")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var genreLabel: UILabel = {
         let label = UILabel()
         label.textColor = .init(hex: "98A5D8")
         label.text = "CRIME"
         label.textAlignment = .center
         label.numberOfLines = 1
-        label.font = .systemFont(ofSize: 13)
+        label.font = .systemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,10 +34,14 @@ final class GenreCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        genreLabelBackgroundView.layer.cornerRadius = (contentView.frame.height * 0.75) / 2
-        genreLabelBackgroundView.layer.masksToBounds = true
+        contentView.layer.cornerRadius = (contentView.frame.height) / 2
+        contentView.layer.masksToBounds = true
     }
     
+    func configure(with genreID: Int) {
+        let genreName = GenreName.id(genreID).genreName
+        genreLabel.text = genreName.uppercased()
+    }
     
     
 }
@@ -53,20 +50,14 @@ final class GenreCell: UICollectionViewCell {
 extension GenreCell {
     private func setupViews() {
         backgroundColor = .init(hex: "FBFCFE")
-        
-        addSubview(genreLabelBackgroundView)
-        genreLabelBackgroundView.addSubview(genreLabel)
+        contentView.backgroundColor = .init(hex: "DDE2FF")
+        contentView.addSubview(genreLabel)
         
         NSLayoutConstraint.activate([
-            genreLabelBackgroundView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            genreLabelBackgroundView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            genreLabelBackgroundView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.75),
-            genreLabelBackgroundView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.75),
-            
-            genreLabel.centerXAnchor.constraint(equalTo: genreLabelBackgroundView.centerXAnchor),
-            genreLabel.centerYAnchor.constraint(equalTo: genreLabelBackgroundView.centerYAnchor),
+            genreLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            genreLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             genreLabel.heightAnchor.constraint(equalToConstant: genreLabel.font.lineHeight),
-            genreLabel.widthAnchor.constraint(equalTo: genreLabelBackgroundView.widthAnchor)
+            genreLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         ])
     }
 }
