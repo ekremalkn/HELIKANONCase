@@ -49,7 +49,7 @@ final class GenreCell: UICollectionViewCell {
 //MARK: - AddSubviews / Constraints
 extension GenreCell {
     private func setupViews() {
-        backgroundColor = .init(hex: "FBFCFE")
+        backgroundColor = .init(hex: "FFFFFF")
         contentView.backgroundColor = .init(hex: "DDE2FF")
         contentView.addSubview(genreLabel)
         

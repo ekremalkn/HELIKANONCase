@@ -72,8 +72,7 @@ final class HomeCollectionCell: UICollectionViewCell {
         layout.minimumInteritemSpacing = 10
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isScrollEnabled = false
-        collection.contentMode = .scaleAspectFit
-        collection.backgroundColor = .init(hex: "FBFCFE")
+        collection.backgroundColor = .init(hex: "FFFFFF")
         collection.register(GenreCell.self, forCellWithReuseIdentifier: GenreCell.identifier)
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
@@ -81,7 +80,7 @@ final class HomeCollectionCell: UICollectionViewCell {
     
     private lazy var seperatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .init(hex: "E9E9E9")
+        view.backgroundColor = .init(hex: "A3A3A3")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -149,7 +148,7 @@ extension HomeCollectionCell: UICollectionViewDelegate, UICollectionViewDataSour
         let genreID = genreIDs[indexPath.item]
         let genreName = GenreName.id(genreID).genreName
         
-        var width = genreName.size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]).width + 25
+        let width = genreName.size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]).width + 25
         
         let cellHeight = (collectionView.frame.height / 2) - 20
         
@@ -161,7 +160,7 @@ extension HomeCollectionCell: UICollectionViewDelegate, UICollectionViewDataSour
 //MARK: - AddSubviews / Constraints
 extension HomeCollectionCell {
     private func setupViews() {
-        backgroundColor = .init(hex: "FBFCFE")
+        backgroundColor = .init(hex: "FFFFFF")
         addSubview(movieImageView)
         addSubview(movieTitleLabel)
         addSubview(ratingStackView)
@@ -195,7 +194,7 @@ extension HomeCollectionCell {
             seperatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
             seperatorView.heightAnchor.constraint(equalToConstant: 0.5),
             seperatorView.leadingAnchor.constraint(equalTo: movieImageView.leadingAnchor, constant: 15),
-            seperatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5)
+            seperatorView.trailingAnchor.constraint(equalTo: genreCollectionView.trailingAnchor, constant: -10)
         ])
     }
 }

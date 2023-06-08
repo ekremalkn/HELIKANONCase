@@ -12,6 +12,7 @@ protocol HomeCollectionHeaderViewModelInterface {
     
     func viewInitizailed()
     func numberOfItems() -> Int
+    func didSelectItem(at indexPath: IndexPath)
 }
 
 final class HomeCollectionHeaderViewModel {
@@ -51,6 +52,12 @@ extension HomeCollectionHeaderViewModel: HomeCollectionHeaderViewModelInterface 
     
     func numberOfItems() -> Int {
         movies.count
+    }
+    
+    func didSelectItem(at indexPath: IndexPath) {
+        guard let id = movies[indexPath.item].id else { return }
+        let movieID = String(describing: id)
+        view?.openDetailVC(with: movieID)
     }
     
     

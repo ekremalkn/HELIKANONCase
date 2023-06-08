@@ -9,7 +9,8 @@ import UIKit
 
 extension UIImageView {
     func setImage(withURL url: URL) {
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self else { return }
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 return
@@ -18,6 +19,10 @@ extension UIImageView {
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
                 print("Invalid response")
+                DispatchQueue.main.async {
+                    self.image = .init(systemName: "questionmark")
+                    self.tintColor = .black
+                }
                 return
             }
             

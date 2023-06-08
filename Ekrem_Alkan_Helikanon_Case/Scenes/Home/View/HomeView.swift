@@ -17,7 +17,7 @@ final class HomeView: UIView {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.register(HomeCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeCollectionHeaderView.identifier)
         collection.register(HomeCollectionCell.self, forCellWithReuseIdentifier: HomeCollectionCell.identifier)
-        collection.backgroundColor = .init(hex: "FBFCFE")
+        collection.backgroundColor = .init(hex: "FFFFFF")
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.showsVerticalScrollIndicator = false
         return collection
@@ -40,7 +40,7 @@ final class HomeView: UIView {
 extension HomeView {
     
     private func setupViews() {
-        backgroundColor = .init(hex: "FBFCFE")
+        backgroundColor = .init(hex: "FFFFFF")
         addSubview(homeCollectionView)
 
         NSLayoutConstraint.activate([

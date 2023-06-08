@@ -67,7 +67,7 @@ struct Result: Codable, HomeCollectionCellDataProtocol, HeaderCollectionCellData
     
     var homeCCRating: String {
         if let voteAverage {
-            return "\(voteAverage)/ 10 IMDB"
+            return "\(voteAverage) / 10 IMDB"
         }
         return "Did'nt find"
     }
@@ -96,7 +96,7 @@ struct Result: Codable, HomeCollectionCellDataProtocol, HeaderCollectionCellData
     
     var headerCCRating: String {
         if let voteAverage {
-            return "\(voteAverage)/ 10 IMDB"
+            return "\(voteAverage) / 10 IMDB"
         }
         return "Did'nt find'"
     }

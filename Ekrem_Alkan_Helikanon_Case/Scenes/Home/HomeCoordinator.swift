@@ -26,7 +26,11 @@ final class HomeCoordinator: Coordinator {
     }
     
     func openDetail(_ movieID: String) {
+        let service: DetailService = NetworkService()
+        let detailViewModel = DetailViewModel(service: service, movieID: movieID)
+        let detailVC = DetailController(viewModel: detailViewModel)
         
+        navigationController.present(detailVC, animated: true)
     }
     
 }

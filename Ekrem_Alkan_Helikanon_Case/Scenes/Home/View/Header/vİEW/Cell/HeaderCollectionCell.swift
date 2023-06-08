@@ -95,7 +95,7 @@ final class HeaderCollectionCell: UICollectionViewCell {
 //MARK: - AddSubviews / Constraints
 extension HeaderCollectionCell {
     private func setupViews() {
-        backgroundColor = .init(hex: "FBFCFE")
+        backgroundColor = .init(hex: "FFFFFF")
         
         addSubview(movieImageView)
         addSubview(movieTitleLabel)

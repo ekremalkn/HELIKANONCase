@@ -11,6 +11,7 @@ protocol HomeViewInterface: AnyObject {
     func configureViewController()
     
     func reloadData()
+    func openDetailVC(with movieID: String)
 }
 
 final class HomeController: UIViewController {
@@ -48,7 +49,7 @@ final class HomeController: UIViewController {
     
     private func configureNavItems() {
         navigationItem.title = "Movie App"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.init(hex: "16143E")]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.init(hex: "120E4A")]
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: .init(systemName: "list.bullet"), style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem?.tintColor = .init(hex: "16143E")
@@ -76,9 +77,13 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, 
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItem(at: indexPath)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeCollectionHeaderView.identifier, for: indexPath) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
-        
+        header.delegate = self
         return header
     }
     
@@ -114,8 +119,20 @@ extension HomeController: HomeViewInterface {
     func reloadData() {
         homeView.homeCollectionView.reloadData()
     }
+    
+    func openDetailVC(with movieID: String) {
+        homeCoordinator?.openDetail(movieID)
+    }
 
     
 }
+
+//MARK: - HomeHeaderButtonInterface
+extension HomeController: HomeCollectionHeaderButtonInterface {
+    func didSelectHeaderCollectionItem(with movieID: String) {
+        homeCoordinator?.openDetail(movieID)
+    }
+}
+
 
 

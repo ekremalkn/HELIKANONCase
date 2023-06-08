@@ -43,6 +43,12 @@
 		F071D68A2A31D24D0070DFB4 /* HomeCollectionHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6892A31D24D0070DFB4 /* HomeCollectionHeaderViewModel.swift */; };
 		F071D68F2A31E7FC0070DFB4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D68E2A31E7FC0070DFB4 /* DetailViewModel.swift */; };
 		F071D6942A31EBB20070DFB4 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6932A31EBB20070DFB4 /* DetailModel.swift */; };
+		F071D6982A3205130070DFB4 /* DVLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6972A3205130070DFB4 /* DVLabel.swift */; };
+		F071D69B2A3207A80070DFB4 /* CastCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D69A2A3207A80070DFB4 /* CastCollectionCell.swift */; };
+		F071D69E2A321B6E0070DFB4 /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = F071D69D2A321B6E0070DFB4 /* YouTubeiOSPlayerHelper */; };
+		F071D6A02A32235A0070DFB4 /* Double+RoundToDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D69F2A32235A0070DFB4 /* Double+RoundToDecimal.swift */; };
+		F071D6A42A3236DB0070DFB4 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6A32A3236DB0070DFB4 /* VideoModel.swift */; };
+		F071D6A62A323E000070DFB4 /* CastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6A52A323E000070DFB4 /* CastModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +89,11 @@
 		F071D6892A31D24D0070DFB4 /* HomeCollectionHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionHeaderViewModel.swift; sourceTree = "<group>"; };
 		F071D68E2A31E7FC0070DFB4 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		F071D6932A31EBB20070DFB4 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
+		F071D6972A3205130070DFB4 /* DVLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVLabel.swift; sourceTree = "<group>"; };
+		F071D69A2A3207A80070DFB4 /* CastCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionCell.swift; sourceTree = "<group>"; };
+		F071D69F2A32235A0070DFB4 /* Double+RoundToDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+RoundToDecimal.swift"; sourceTree = "<group>"; };
+		F071D6A32A3236DB0070DFB4 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
+		F071D6A52A323E000070DFB4 /* CastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F071D6722A310E1C0070DFB4 /* Alamofire in Frameworks */,
+				F071D69E2A321B6E0070DFB4 /* YouTubeiOSPlayerHelper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +271,7 @@
 		F071D63E2A30BADA0070DFB4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F071D6992A32078C0070DFB4 /* Cell */,
 				F071D63F2A30BAE60070DFB4 /* DetailController.swift */,
 				F071D6412A30BAF30070DFB4 /* DetailView.swift */,
 			);
@@ -284,6 +297,7 @@
 		F071D6542A30D2B90070DFB4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				F071D6952A3204DE0070DFB4 /* Components */,
 				F071D6562A30D2C80070DFB4 /* Extensions */,
 				F071D62F2A30B85A0070DFB4 /* Protocols */,
 			);
@@ -295,6 +309,7 @@
 			children = (
 				F071D6572A30D2DC0070DFB4 /* UIColor+HexString.swift */,
 				F071D6802A31C1F20070DFB4 /* UIImageView+SetImage.swift */,
+				F071D69F2A32235A0070DFB4 /* Double+RoundToDecimal.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -409,8 +424,34 @@
 			isa = PBXGroup;
 			children = (
 				F071D6932A31EBB20070DFB4 /* DetailModel.swift */,
+				F071D6A32A3236DB0070DFB4 /* VideoModel.swift */,
+				F071D6A52A323E000070DFB4 /* CastModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		F071D6952A3204DE0070DFB4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F071D6962A3204E40070DFB4 /* Label */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F071D6962A3204E40070DFB4 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				F071D6972A3205130070DFB4 /* DVLabel.swift */,
+			);
+			path = Label;
+			sourceTree = "<group>";
+		};
+		F071D6992A32078C0070DFB4 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F071D69A2A3207A80070DFB4 /* CastCollectionCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -431,6 +472,7 @@
 			name = Ekrem_Alkan_Helikanon_Case;
 			packageProductDependencies = (
 				F071D6712A310E1C0070DFB4 /* Alamofire */,
+				F071D69D2A321B6E0070DFB4 /* YouTubeiOSPlayerHelper */,
 			);
 			productName = Ekrem_Alkan_Helikanon_Case;
 			productReference = F071D60B2A30B50C0070DFB4 /* Ekrem_Alkan_Helikanon_Case.app */;
@@ -462,6 +504,7 @@
 			mainGroup = F071D6022A30B50C0070DFB4;
 			packageReferences = (
 				F071D6702A310E1C0070DFB4 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				F071D69C2A321B6E0070DFB4 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
 			);
 			productRefGroup = F071D60C2A30B50C0070DFB4 /* Products */;
 			projectDirPath = "";
@@ -499,6 +542,7 @@
 				F071D68A2A31D24D0070DFB4 /* HomeCollectionHeaderViewModel.swift in Sources */,
 				F071D66F2A310DC40070DFB4 /* NetworkAPIConstants.swift in Sources */,
 				F071D6942A31EBB20070DFB4 /* DetailModel.swift in Sources */,
+				F071D6A02A32235A0070DFB4 /* Double+RoundToDecimal.swift in Sources */,
 				F071D6352A30BA4F0070DFB4 /* MainTabBarController.swift in Sources */,
 				F071D65E2A30D4C80070DFB4 /* HeaderCollectionCell.swift in Sources */,
 				F071D63D2A30BAD40070DFB4 /* HomeController.swift in Sources */,
@@ -511,12 +555,16 @@
 				F071D64E2A30CB1E0070DFB4 /* HomeCoordinator.swift in Sources */,
 				F071D64C2A30C1430070DFB4 /* FavoriteCoordinator.swift in Sources */,
 				F071D6812A31C1F20070DFB4 /* UIImageView+SetImage.swift in Sources */,
+				F071D6982A3205130070DFB4 /* DVLabel.swift in Sources */,
+				F071D69B2A3207A80070DFB4 /* CastCollectionCell.swift in Sources */,
+				F071D6A42A3236DB0070DFB4 /* VideoModel.swift in Sources */,
 				F071D67D2A31159C0070DFB4 /* MovieModel.swift in Sources */,
 				F071D63B2A30BAC90070DFB4 /* HomeView.swift in Sources */,
 				F071D65B2A30D3DD0070DFB4 /* HomeCollectionHeaderView.swift in Sources */,
 				F071D6502A30CBDA0070DFB4 /* SettingsCoordinator.swift in Sources */,
 				F071D6522A30CDB70070DFB4 /* AppCoordinator.swift in Sources */,
 				F071D6862A31CC330070DFB4 /* HomeCollectionCellModel.swift in Sources */,
+				F071D6A62A323E000070DFB4 /* CastModel.swift in Sources */,
 				F071D67F2A3116570070DFB4 /* HomeViewModel.swift in Sources */,
 				F071D6792A3112730070DFB4 /* NetworkManager.swift in Sources */,
 				F071D6112A30B50C0070DFB4 /* SceneDelegate.swift in Sources */,
@@ -749,6 +797,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		F071D69C2A321B6E0070DFB4 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -756,6 +812,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F071D6702A310E1C0070DFB4 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		F071D69D2A321B6E0070DFB4 /* YouTubeiOSPlayerHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F071D69C2A321B6E0070DFB4 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
+			productName = YouTubeiOSPlayerHelper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

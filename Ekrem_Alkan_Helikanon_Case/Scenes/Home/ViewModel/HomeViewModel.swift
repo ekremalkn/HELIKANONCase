@@ -13,6 +13,7 @@ protocol HomeViewModelInterface {
     func viewDidLoad()
     func viewWillAppear()
     func numberOfItems() -> Int
+    func didSelectItem(at indexPath: IndexPath)
 }
 
 final class HomeViewModel {
@@ -55,6 +56,12 @@ extension HomeViewModel: HomeViewModelInterface {
     
     func numberOfItems() -> Int {
         movies.count
+    }
+    
+    func didSelectItem(at indexPath: IndexPath) {
+        guard let id = movies[indexPath.item].id else { return }
+        let movieID = String(describing: id)
+        view?.openDetailVC(with: movieID)
     }
     
     

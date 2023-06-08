@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol HomeCollectionHeaderButtonInterface: AnyObject {
+    func didSelectHeaderCollectionItem(with movideID: String)
+}
+
 protocol HomeCollectionHeaderInterface: AnyObject {
     func configureHeaderView()
     
     func reloadData()
+    func openDetailVC(with movieID: String)
 }
 
 final class HomeCollectionHeaderView: UICollectionReusableView {
@@ -19,7 +24,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     private lazy var topCategoryLabel: UILabel = {
         let label = UILabel()
         label.text = "Now Playing"
-        label.textColor = .init(hex: "16143E")
+        label.textColor = .init(hex: "120E4A")
         label.font = .boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,7 +36,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
         layout.minimumLineSpacing = 15
         layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .init(hex: "FBFCFE")
+        collectionView.backgroundColor = .init(hex: "FFFFFF")
         collectionView.register(HeaderCollectionCell.self, forCellWithReuseIdentifier: HeaderCollectionCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -40,7 +45,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     
     private lazy var bottomCategoryLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .init(hex: "16143E")
+        label.textColor = .init(hex: "120E4A")
         label.font = .boldSystemFont(ofSize: 20)
         label.textAlignment = .left
         label.text = "Popular"
@@ -50,7 +55,8 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     
     //MARK: - References
     private let viewModel: HomeCollectionHeaderViewModel
-
+    weak var delegate: HomeCollectionHeaderButtonInterface?
+    
     override init(frame: CGRect) {
         let service: CategoryService = NetworkService()
         self.viewModel = HomeCollectionHeaderViewModel(service: service)
@@ -83,6 +89,10 @@ extension HomeCollectionHeaderView: HomeCollectionHeaderInterface {
         horizontalCollectionView.reloadData()
     }
     
+    func openDetailVC(with movieID: String) {
+        delegate?.didSelectHeaderCollectionItem(with: movieID)
+    }
+    
     
 }
 
@@ -100,6 +110,9 @@ extension HomeCollectionHeaderView: UICollectionViewDelegate, UICollectionViewDa
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItem(at: indexPath)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWidth: CGFloat = (collectionView.frame.width / 2) - 20

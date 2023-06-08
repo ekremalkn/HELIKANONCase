@@ -13,6 +13,8 @@ protocol CategoryService: AnyObject {
 
 protocol DetailService: AnyObject {
     func getMovieDetails(with movieID: String, onSuccess: @escaping (DetailModel?) -> Void, onError: @escaping (AFError) -> Void)
+    func getVideoDetails(with movieID: String, onSuccess: @escaping (VideoModel?) -> Void, onError: @escaping (AFError) -> Void)
+    func getCastsDetails(with movieID: String, onSuccess: @escaping (CastModel?) -> Void, onError: @escaping (AFError) -> Void)
 }
 
 final class NetworkService {
@@ -48,6 +50,29 @@ extension NetworkService: DetailService {
 
     }
     
+    
+    func getVideoDetails(with movieID: String, onSuccess: @escaping (VideoModel?) -> Void, onError: @escaping (AFError) -> Void) {
+        let endPoint = NetworkEndPointCases.getVideos(categoryType: .detail, movieID: movieID)
+        
+        NetworkManager.shared.request(path: endPoint.path, headers: endPoint.headers, bearerToken: endPoint.apiKey) { model in
+            onSuccess(model)
+        } onError: { error in
+            onError(error)
+        }
+
+    }
+    
+    func getCastsDetails(with movieID: String, onSuccess: @escaping (CastModel?) -> Void, onError: @escaping (AFError) -> Void) {
+        let endPoint = NetworkEndPointCases.getCasts(categoryType: .detail, movieID: movieID)
+        print(endPoint.path)
+        
+        NetworkManager.shared.request(path: endPoint.path, headers: endPoint.headers, bearerToken: endPoint.apiKey) { model in
+            onSuccess(model)
+        } onError: { error in
+            onError(error)
+        }
+
+    }
    
     
     

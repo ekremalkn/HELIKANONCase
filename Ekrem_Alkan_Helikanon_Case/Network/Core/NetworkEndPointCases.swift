@@ -9,9 +9,11 @@ import Alamofire
 
 public enum NetworkEndPointCases: NetworkEndPoint {
     
-case getPopularMovies(categoryType: NetworkConstants)
-case getTrendMovies(categoryType: NetworkConstants)
-case getDetails(categoryType: NetworkConstants, movieID: String)
+    case getPopularMovies(categoryType: NetworkConstants)
+    case getTrendMovies(categoryType: NetworkConstants)
+    case getDetails(categoryType: NetworkConstants, movieID: String)
+    case getVideos(categoryType: NetworkConstants, movieID: String)
+    case getCasts(categoryType: NetworkConstants, movieID: String)
     
     var apiKey: String {
         NetworkAPIConstants.API_KEY.rawValue
@@ -25,6 +27,10 @@ case getDetails(categoryType: NetworkConstants, movieID: String)
             return categoryType.baseRequestURL
         case .getDetails(categoryType: let categoryType, movieID: let movieID):
             return "\(categoryType.baseRequestURL)\(movieID)"
+        case .getVideos(categoryType: let categoryType, movieID: let movieID):
+            return "\(categoryType.baseRequestURL)\(movieID)/videos"
+        case .getCasts(categoryType: let categoryType, movieID: let movieID):
+            return "\(categoryType.baseRequestURL)\(movieID)/credits"
         }
     }
     
