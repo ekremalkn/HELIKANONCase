@@ -12,14 +12,14 @@ protocol NetworkConstantsProtocol {
 }
 
 public enum NetworkConstants: NetworkConstantsProtocol {
-    case popular
+    case popular(page: Int)
     case trends
     case detail
     
     var baseRequestURL: String {
         switch self {
-        case .popular:
-           return "https://api.themoviedb.org/3/movie/popular"
+        case .popular(let page):
+           return "https://api.themoviedb.org/3/movie/popular?page=\(page)"
         case .trends:
             return "https://api.themoviedb.org/3/movie/top_rated"
         case .detail:

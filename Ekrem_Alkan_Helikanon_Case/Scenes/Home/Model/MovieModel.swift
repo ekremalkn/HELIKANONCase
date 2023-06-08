@@ -53,7 +53,7 @@ struct Result: Codable, HomeCollectionCellDataProtocol, HeaderCollectionCellData
     //MARK: - HomeCollectionCellDataProtocol
     var homeCCImage: String {
         if let posterPath {
-            return posterPath
+            return "https://image.tmdb.org/t/p/w500/\(posterPath)"
         }
         return "" // add placeHolderImage
     }
@@ -82,7 +82,7 @@ struct Result: Codable, HomeCollectionCellDataProtocol, HeaderCollectionCellData
     //MARK: - HeaderCollectionCellDataProtocol
     var headerCCImage: String {
         if let posterPath {
-            return posterPath
+            return "https://image.tmdb.org/t/p/w500/\(posterPath)"
         }
         return "" // add placeHolderImage
     }

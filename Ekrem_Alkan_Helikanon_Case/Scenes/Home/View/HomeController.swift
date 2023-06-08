@@ -50,7 +50,10 @@ final class HomeController: UIViewController {
     private func configureNavItems() {
         navigationItem.title = "Movie App"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.init(hex: "120E4A")]
-        
+        navigationController?.navigationBar.barTintColor = .init(hex: "FFFFFF")
+        navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        navigationController?.navigationBar.layer.shadowOpacity = 0.3
+        navigationController?.navigationBar.layer.shadowOffset = CGSize.init(width: 2, height: 2)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: .init(systemName: "list.bullet"), style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem?.tintColor = .init(hex: "16143E")
     }
@@ -64,7 +67,7 @@ final class HomeController: UIViewController {
 }
 
 //MARK: - Configure HomeCollectionView
-extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.numberOfItems()
@@ -82,9 +85,15 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeCollectionHeaderView.identifier, for: indexPath) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
-        header.delegate = self
-        return header
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeCollectionHeaderView.identifier, for: indexPath) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
+            header.delegate = self
+            return header
+        } else if kind == UICollectionView.elementKindSectionFooter {
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: HomeCollectionFooterView.identifier, for: indexPath) as? HomeCollectionFooterView else { return UICollectionReusableView() }
+            return footer
+        }
+        return UICollectionReusableView()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -97,6 +106,14 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, 
         return CGSize(width: headerWidth, height: headerHeight)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        let homeCollectionView = homeView.homeCollectionView
+        let footerWidth: CGFloat = homeCollectionView.frame.width
+        let footerHeight: CGFloat = 100
+        
+        return CGSize(width: footerWidth, height: footerHeight)
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let homeCollectionView = homeView.homeCollectionView
@@ -104,6 +121,16 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, 
         let cellHeight: CGFloat = 200
         
         return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let collectionViewContentPosition = scrollView.contentOffset.y
+        let collectionBottomPosition = homeView.homeCollectionView.contentSize.height - scrollView.frame.size.height
+        
+        if viewModel.isPaginating {
+            return
+        }
+        (collectionViewContentPosition > collectionBottomPosition) ? viewModel.didScrollToEnd() : nil
     }
     
 }
@@ -117,13 +144,16 @@ extension HomeController: HomeViewInterface {
     
     
     func reloadData() {
-        homeView.homeCollectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            homeView.homeCollectionView.reloadData()
+        }
     }
     
     func openDetailVC(with movieID: String) {
         homeCoordinator?.openDetail(movieID)
     }
-
+    
     
 }
 

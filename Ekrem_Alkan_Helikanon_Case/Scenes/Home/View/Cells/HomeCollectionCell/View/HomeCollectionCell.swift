@@ -16,7 +16,7 @@ protocol HomeCollectionCellDataProtocol where Self: Decodable {
 
 final class HomeCollectionCell: UICollectionViewCell {
     static let identifier = "HomeCollectionCell"
-
+    
     //MARK: - Creating UI Elements
     private lazy var movieImageView: UIImageView = {
         let imageView = UIImageView()
@@ -69,9 +69,10 @@ final class HomeCollectionCell: UICollectionViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 10
+        layout.minimumInteritemSpacing = 5
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 15)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.isScrollEnabled = false
+        collection.isUserInteractionEnabled = false
         collection.backgroundColor = .init(hex: "FFFFFF")
         collection.register(GenreCell.self, forCellWithReuseIdentifier: GenreCell.identifier)
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -88,10 +89,13 @@ final class HomeCollectionCell: UICollectionViewCell {
     //MARK: - Variables
     var genreIDs: [Int] = [] {
         didSet {
-            genreCollectionView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                genreCollectionView.reloadData()
+            }
         }
     }
-
+    
     //MARK: - Init Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -120,7 +124,7 @@ final class HomeCollectionCell: UICollectionViewCell {
     
     func configure(with data: HomeCollectionCellDataProtocol) {
         genreIDs = data.homeCCgenres
-        if let URL = URL(string: "https://image.tmdb.org/t/p/w500/\(data.homeCCImage)") {
+        if let URL = URL(string: data.homeCCImage) {
             movieImageView.setImage(withURL: URL)
         }
         movieTitleLabel.text = data.homeCCTitle
@@ -150,7 +154,7 @@ extension HomeCollectionCell: UICollectionViewDelegate, UICollectionViewDataSour
         
         let width = genreName.size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]).width + 25
         
-        let cellHeight = (collectionView.frame.height / 2) - 20
+        let cellHeight = (collectionView.frame.height / 3) - 10
         
         return CGSize(width: width, height: cellHeight)
     }
@@ -187,8 +191,8 @@ extension HomeCollectionCell {
             ratingStackView.heightAnchor.constraint(equalToConstant: ratingLabel.font.lineHeight),
             
             genreCollectionView.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: 10),
-            genreCollectionView.leadingAnchor.constraint(equalTo: movieTitleLabel.leadingAnchor),
-            genreCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            genreCollectionView.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor),
+            genreCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             genreCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             seperatorView.bottomAnchor.constraint(equalTo: bottomAnchor),

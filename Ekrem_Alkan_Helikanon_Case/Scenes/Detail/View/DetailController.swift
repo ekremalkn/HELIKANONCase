@@ -19,7 +19,7 @@ protocol DetailViewInterface: AnyObject {
 final class DetailController: UIViewController {
     
     deinit {
-    print("Detail COntroller deinit")
+        print("Detail COntroller deinit")
     }
     
     //MARK: - References
@@ -47,7 +47,7 @@ final class DetailController: UIViewController {
         viewModel.view = self
         viewModel.viewDidLoad()
     }
-
+    
 }
 
 //MARK: - Configure HomeCollectionView
@@ -59,7 +59,7 @@ extension DetailController: UICollectionViewDelegate, UICollectionViewDataSource
         if collectionView == genreCollectionView {
             return viewModel.numberOfItems(type: .genre)
         } else if collectionView == castCollectionView {
-           return viewModel.numberOfItems(type: .cast)
+            return viewModel.numberOfItems(type: .cast)
         }
         return 0
     }
@@ -136,11 +136,17 @@ extension DetailController: DetailViewInterface {
     }
     
     func reloadGenreCollectionData() {
-        detailView.genreCollectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            detailView.genreCollectionView.reloadData()
+        }
     }
     
     func reloadCastCollectionData() {
-        detailView.castCollectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            detailView.castCollectionView.reloadData()
+        }
     }
     
 }
@@ -148,7 +154,7 @@ extension DetailController: DetailViewInterface {
 //MARK: - DetailView Button Interface
 extension DetailController: DetailViewButtonInterface {
     func detailView(_ view: DetailView, backButtonTapped button: UIButton) {
-       dismiss(animated: true)
+        dismiss(animated: true)
     }
     
     

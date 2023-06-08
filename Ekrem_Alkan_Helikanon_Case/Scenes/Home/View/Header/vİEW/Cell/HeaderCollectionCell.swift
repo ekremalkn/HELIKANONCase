@@ -82,7 +82,7 @@ final class HeaderCollectionCell: UICollectionViewCell {
     
     
     func configure(with data: HeaderCollectionCellDataProtocol) {
-        if let URL = URL(string: "https://image.tmdb.org/t/p/w500/\(data.headerCCImage)") {
+        if let URL = URL(string: data.headerCCImage) {
             movieImageView.setImage(withURL: URL)
         }
         movieTitleLabel.text = data.headerCCTitle

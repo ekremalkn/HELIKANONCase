@@ -36,7 +36,7 @@ struct Cast: Codable, CastCollectionCellDataProtocol {
     
     var castCCActorImage: String {
         if let profilePath {
-            return profilePath
+            return "https://image.tmdb.org/t/p/w500\(profilePath)"
         }
         return ""
     }

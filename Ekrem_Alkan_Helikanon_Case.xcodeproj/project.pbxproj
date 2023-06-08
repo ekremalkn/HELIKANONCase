@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0138D242A3265B10020E35A /* HomeCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0138D232A3265B10020E35A /* HomeCollectionFooterView.swift */; };
 		F071D60F2A30B50C0070DFB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D60E2A30B50C0070DFB4 /* AppDelegate.swift */; };
 		F071D6112A30B50C0070DFB4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6102A30B50C0070DFB4 /* SceneDelegate.swift */; };
 		F071D6182A30B50D0070DFB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F071D6172A30B50D0070DFB4 /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F0138D232A3265B10020E35A /* HomeCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionFooterView.swift; sourceTree = "<group>"; };
 		F071D60B2A30B50C0070DFB4 /* Ekrem_Alkan_Helikanon_Case.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ekrem_Alkan_Helikanon_Case.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F071D60E2A30B50C0070DFB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F071D6102A30B50C0070DFB4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F0138D222A32658A0020E35A /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				F0138D232A3265B10020E35A /* HomeCollectionFooterView.swift */,
+			);
+			path = Footer;
+			sourceTree = "<group>";
+		};
 		F071D6022A30B50C0070DFB4 = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +213,7 @@
 			children = (
 				F071D6622A30DE6F0070DFB4 /* Cells */,
 				F071D6592A30D3AA0070DFB4 /* Header */,
+				F0138D222A32658A0020E35A /* Footer */,
 				F071D63A2A30BAC90070DFB4 /* HomeView.swift */,
 				F071D63C2A30BAD40070DFB4 /* HomeController.swift */,
 			);
@@ -566,6 +577,7 @@
 				F071D6862A31CC330070DFB4 /* HomeCollectionCellModel.swift in Sources */,
 				F071D6A62A323E000070DFB4 /* CastModel.swift in Sources */,
 				F071D67F2A3116570070DFB4 /* HomeViewModel.swift in Sources */,
+				F0138D242A3265B10020E35A /* HomeCollectionFooterView.swift in Sources */,
 				F071D6792A3112730070DFB4 /* NetworkManager.swift in Sources */,
 				F071D6112A30B50C0070DFB4 /* SceneDelegate.swift in Sources */,
 				F071D67B2A3113F80070DFB4 /* NetworkService.swift in Sources */,

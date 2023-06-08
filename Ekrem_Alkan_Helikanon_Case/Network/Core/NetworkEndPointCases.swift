@@ -9,8 +9,7 @@ import Alamofire
 
 public enum NetworkEndPointCases: NetworkEndPoint {
     
-    case getPopularMovies(categoryType: NetworkConstants)
-    case getTrendMovies(categoryType: NetworkConstants)
+    case getMovies(categoryType: NetworkConstants)
     case getDetails(categoryType: NetworkConstants, movieID: String)
     case getVideos(categoryType: NetworkConstants, movieID: String)
     case getCasts(categoryType: NetworkConstants, movieID: String)
@@ -21,9 +20,7 @@ public enum NetworkEndPointCases: NetworkEndPoint {
     
     var path: String {
         switch self {
-        case .getPopularMovies(categoryType: let categoryType):
-            return categoryType.baseRequestURL
-        case .getTrendMovies(categoryType: let categoryType):
+        case .getMovies(categoryType: let categoryType):
             return categoryType.baseRequestURL
         case .getDetails(categoryType: let categoryType, movieID: let movieID):
             return "\(categoryType.baseRequestURL)\(movieID)"

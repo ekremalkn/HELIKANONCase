@@ -12,7 +12,7 @@ final class HomeCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     
     var navigationController: UINavigationController = UINavigationController()
-  
+    
     
     func start() {
         let service: CategoryService = NetworkService()

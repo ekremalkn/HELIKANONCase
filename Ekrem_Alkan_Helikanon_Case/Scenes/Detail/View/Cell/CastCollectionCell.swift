@@ -44,7 +44,7 @@ final class CastCollectionCell: UICollectionViewCell {
     }
     
     func configure(with data: CastCollectionCellDataProtocol) {
-        if let URL = URL(string: "https://image.tmdb.org/t/p/w500\(data.castCCActorImage)") {
+        if let URL = URL(string: data.castCCActorImage) {
             actorImageView.setImage(withURL: URL)
         }
         actorNameLabel.text = data.castCCActorName

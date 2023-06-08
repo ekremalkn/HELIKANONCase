@@ -13,11 +13,15 @@ protocol DetailViewButtonInterface: AnyObject {
 }
 
 final class DetailView: UIView {
+    deinit {
+        print("DetailView deinit")
+    }
     
     //MARK: - Creating UI Elements
     private lazy var contentScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .init(hex: "FFFFFF")
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()

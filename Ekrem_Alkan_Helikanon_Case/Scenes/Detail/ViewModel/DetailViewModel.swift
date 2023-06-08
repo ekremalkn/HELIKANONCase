@@ -30,7 +30,9 @@ protocol DetailViewModelInterface {
 }
 
 final class DetailViewModel {
-    
+    deinit {
+        print("DetailViewModel deinit")
+    }
     //MARK: - References
     let service: DetailService
     weak var view: DetailViewInterface?

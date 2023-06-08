@@ -68,7 +68,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     
     private func setDelegates() {
         horizontalCollectionView.delegate = self
@@ -86,7 +86,10 @@ extension HomeCollectionHeaderView: HomeCollectionHeaderInterface {
     }
     
     func reloadData() {
-        horizontalCollectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            horizontalCollectionView.reloadData()
+        }
     }
     
     func openDetailVC(with movieID: String) {

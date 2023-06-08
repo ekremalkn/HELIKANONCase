@@ -18,14 +18,15 @@ protocol DetailService: AnyObject {
 }
 
 final class NetworkService {
-    
+    deinit {
+        print("deinit NetworkService")
+    }
 }
 
 //MARK: - Getting Categories
 extension NetworkService: CategoryService {
     func getMovies(categoryType: NetworkConstants, onSuccess: @escaping (MovieModel?) -> Void, onError: @escaping (AFError) -> Void) {
-        let endPoint = NetworkEndPointCases.getPopularMovies(categoryType: .popular)
-        
+        let endPoint = NetworkEndPointCases.getMovies(categoryType: categoryType)
         NetworkManager.shared.request(path: endPoint.path, headers: endPoint.headers, bearerToken: endPoint.apiKey) { model in
             onSuccess(model)
         } onError: { error in
